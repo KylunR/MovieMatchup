@@ -34,8 +34,15 @@ import edu.tacoma.uw.kylunr.moviematchup.data.Movie;
  */
 public class Search extends AppCompatActivity {
 
+    // List of results from search
     private List<Movie> searchList;
 
+    /**
+     * Displays the search bar and button to the viewer.
+     * Creates a listener for the button.
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,11 +54,17 @@ public class Search extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // If clicked, search with parameters
                 searchMovies(query.getText().toString());
             }
         });
     }
 
+
+    /**
+     * When resumed, if there are results
+     * clear them
+     */
     @Override
     protected void onResume() {
         super.onResume();
@@ -82,6 +95,14 @@ public class Search extends AppCompatActivity {
      */
     private class MoviesTask extends AsyncTask<String, Void, String> {
 
+        /**
+         * Makes a GET request to the argument URL.
+         * Records the response from the request and
+         * returns it in a string.
+         *
+         * @param urls - API to be connected to
+         * @return response - JSON response from API
+         */
         @Override
         protected String doInBackground(String... urls) {
             String response = "";
@@ -91,10 +112,7 @@ public class Search extends AppCompatActivity {
                     URL urlObject = new URL(url);
                     urlConnection = (HttpURLConnection) urlObject.openConnection();
 
-                    Log.e("e", "Made Connection!");
-
                     InputStream content = urlConnection.getInputStream();
-                    Log.e("e", "Made Input Stream!");
 
                     BufferedReader buffer = new BufferedReader(new InputStreamReader(content));
                     String s = "";
@@ -115,6 +133,14 @@ public class Search extends AppCompatActivity {
             return response;
         }
 
+        /**
+         * Takes the response from the GET request
+         * and creates a JSON object for it.  The JSON object
+         * is passed to the movie class for parsing.  The parsed
+         * data is then printed to the screen.
+         *
+         * @param s - response from GET request
+         */
         @Override
         protected void onPostExecute(String s) {
             if (s.startsWith("Unable to")) {
@@ -123,11 +149,12 @@ public class Search extends AppCompatActivity {
                 return;
             }
             try {
-                Log.e("e", "Parsing JSON!");
                 JSONObject jsonObject = new JSONObject(s);
 
+                    // Parse JSON
                     searchList = Movie.parseMovieJson(jsonObject.getString("data"));
 
+                    // Add search results to screen
                     TextView textView = (TextView) findViewById(R.id.textview);
                     textView.setMovementMethod(new ScrollingMovementMethod());
 

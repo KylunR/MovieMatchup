@@ -1,11 +1,9 @@
 package edu.tacoma.uw.kylunr.moviematchup.data;
 
 import android.util.Log;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,13 +63,10 @@ public class Movie {
                 Movie movie = new Movie(obj.getString(TITLE),
                         "http://image.tmdb.org/t/p/w154" + obj.getString(POSTER));
 
-                Log.e("e", "" + movie.toString());
-
                 movieList.add(movie);
             }
         }
 
-        Log.e("e", "" + movieList.toString());
         return movieList;
     }
 

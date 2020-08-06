@@ -36,6 +36,11 @@ public class MainActivity extends AppCompatActivity {
 
 
     /**
+     * Creates buttons for other features (search, signout)
+     * and hides them from view.  Then calls showSignInOptions()
+     * to allow the user to sign-in.  Once logged in the user
+     * can view the available features.  Sign-out will hide all
+     * features and show sign-in options again.
      *
      * @param savedInstanceState
      */
@@ -44,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Sign-out button and behavior
         signout_button = (Button) findViewById(R.id.signout_button);
         signout_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
+                                // Once signed-out hide button
                                 signout_button.setEnabled(false);
                                 showSignInOptions();
                             }
@@ -66,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Search button
         search_button = (Button) findViewById(R.id.goToSearch_button);
         search_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Init providers
+        // Initialize sign-in options
         providers = Arrays.asList(
                 new AuthUI.IdpConfig.PhoneBuilder().build(),        // Phone Builder
                 new AuthUI.IdpConfig.EmailBuilder().build(),        // Email Builder
@@ -86,7 +94,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     *
+     *  Gets the sign in options (phone, email, and Google)
+     *  and displays them on screen
      */
     private void showSignInOptions() {
         startActivityForResult(
@@ -98,6 +107,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
+     * Uses Firebase to authenticate the user with their chose
+     * sign-in option.  After sign-in is complete other features
+     * are shown to user.
      *
      * @param requestCode
      * @param resultCode
