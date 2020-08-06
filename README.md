@@ -23,6 +23,7 @@ Use test account to test login with Google:
 * As a user, I would like to sign in to an account to access my movie list.
 * As a user, I would like to sign in using my Google log-in to save time and use a familiar password. 
 
+
 ### **Search**
 App allows for searching of movies
 
