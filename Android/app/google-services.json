@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "701067337334",
+    "firebase_url": "https://movie-matchup.firebaseio.com",
+    "project_id": "movie-matchup",
+    "storage_bucket": "movie-matchup.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:701067337334:android:8f7c572f595dbf83650957",
+        "android_client_info": {
+          "package_name": "edu.tacoma.uw.kylunr.moviematchup"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "701067337334-jbqans8bmja3qr4viqf3ujmcs1hn21uh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDNkOfSIKj9vmqlDQJMls_0nCKiZCXLTOA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "701067337334-jbqans8bmja3qr4viqf3ujmcs1hn21uh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
