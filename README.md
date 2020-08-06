@@ -8,7 +8,7 @@ https://app.lucidchart.com/invitations/accept/93099114-63eb-4662-bcb2-74c31f1a82
 
 ## Features Implemented
 
-### Authentication (Sign In and Sign Up)
+### **Authentication (Sign In and Sign Up)**
 App allows for creating an account and loggin in by either:
   * Phone number
   * Email
@@ -23,7 +23,7 @@ Use test account to test login with Google:
 * As a user, I would like to sign in to an account to access my movie list.
 * As a user, I would like to sign in using my Google log-in to save time and use a familiar password. 
 
-### Search
+### **Search**
 App allows for searching of movies
 
 #### User Stories
