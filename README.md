@@ -14,12 +14,12 @@ App allows for creating an account and loggin in by either:
   * Email
   * Google Account
 
-**Test Account**
+Test Account
 Use test account to test login with Google:
   * Email :     css450test@gmail.com
   * Password :  tcss450!
 
-**User Stories**
+User Stories
 * As a user, I would like to sign in to an account to access my movie list.
 * As a user, I would like to sign in using my Google log-in to save time and use a familiar password. 
 
@@ -27,5 +27,5 @@ Use test account to test login with Google:
 ### Search
 App allows for searching of movies
 
-**User Stories**
+User Stories
 * As a user, I would like to search and add a specific movie to my ranked list.
