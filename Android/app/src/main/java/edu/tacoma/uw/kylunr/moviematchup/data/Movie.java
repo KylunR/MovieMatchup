@@ -16,13 +16,19 @@ public class Movie {
 
     private String title;
     private String posterURL;
+    private int id;
+    private int voteCount;
 
     public static final String TITLE = "title";
     public static final String POSTER = "poster_path";
+    public static final String ID = "id";
+    public static final String VOTE_COUNT = "vote_count";
 
-    public Movie(String title, String posterURL) {
+    public Movie(String title, String posterURL, int id, int voteCount) {
         this.title = title;
         this.posterURL = posterURL;
+        this.id = id;
+        this.voteCount = voteCount;
     }
 
     /**
@@ -33,7 +39,7 @@ public class Movie {
      */
     @Override
     public String toString() {
-        return this.title;
+        return this.title + "," + this.posterURL + "," + this.id + "," + this.getVoteCount();
     }
 
     /**
@@ -61,7 +67,8 @@ public class Movie {
                 JSONObject obj = arr.getJSONObject(i);
 
                 Movie movie = new Movie(obj.getString(TITLE),
-                        "http://image.tmdb.org/t/p/w154" + obj.getString(POSTER));
+                        "http://image.tmdb.org/t/p/w154" + obj.getString(POSTER),
+                        obj.getInt(ID), obj.getInt(VOTE_COUNT));
 
                 movieList.add(movie);
             }
@@ -76,5 +83,13 @@ public class Movie {
 
     public String getPosterURL() {
         return this.posterURL;
+    }
+
+    public int getId() {
+        return this.id;
+    }
+
+    public int getVoteCount() {
+        return this.voteCount;
     }
 }

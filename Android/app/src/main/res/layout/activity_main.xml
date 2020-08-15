@@ -4,28 +4,89 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="@android:color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center"
-        android:paddingTop="250dp" >
+        android:layout_marginTop="75dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@mipmap/matchup_logo"
+            android:layout_marginTop="50dp"
+            android:layout_gravity="center_horizontal"
+            android:scaleX="2.5"
+            android:scaleY="2.5"
+            android:scaleType="fitCenter"
+            android:padding="50dp"/>
+
+        <Button
+            android:id="@+id/goToMatchup_button"
+            android:background="@drawable/button_background"
+            android:text="Matchup"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:enabled="false"
+            android:width="175dp"
+            android:layout_marginTop="75dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/goToViewList_button"
+            android:background="@drawable/button_background"
+            android:text="Favorite List"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:enabled="false"
+            android:width="175dp"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/goToWatchList_button"
+            android:background="@drawable/button_background"
+            android:text="Recommendations"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:enabled="false"
+            android:width="175dp"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
         <Button
             android:id="@+id/goToSearch_button"
+            android:background="@drawable/button_background"
             android:text="Search"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
             android:layout_gravity="center"
             android:enabled="false"
+            android:width="175dp"
+            android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <Button
             android:id="@+id/signout_button"
             android:text="Sign Out"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
+            android:background="@drawable/button_background"
             android:layout_gravity="center"
             android:enabled="false"
+            android:width="175dp"
+            android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 

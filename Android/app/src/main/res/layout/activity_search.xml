@@ -12,32 +12,39 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_gravity="center_horizontal"
-        android:paddingTop="75dp" >
+        android:layout_marginTop="75dp" >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Movie Search"
-            android:textStyle="bold"
             android:textColor="@android:color/black"
-            android:textSize="50dp" />
+            android:textSize="50dp"
+            android:textStyle="bold"
+            android:text="Search"
+            android:layout_gravity="center_horizontal"/>
 
         <EditText
             android:id="@+id/search_bar"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="15dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="Enter movie title..."
             android:layout_gravity="center_horizontal"
             android:textColor="@android:color/black"
+            android:textAlignment="center"
+            android:textColorHint="@android:color/black"
+            android:backgroundTint="@android:color/darker_gray"
+            android:width="250dp"
             android:textStyle="bold" />
 
         <Button
             android:id="@+id/search_button"
+            android:background="@drawable/button_background"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:text="Search"
+            android:width="175dp"
             android:textStyle="bold"
             android:textColor="@android:color/black"
             android:layout_marginTop="10dp" />
@@ -51,6 +58,8 @@
             android:textStyle="bold"
             android:textSize="15dp"
             />
+
+
 
     </LinearLayout>
 

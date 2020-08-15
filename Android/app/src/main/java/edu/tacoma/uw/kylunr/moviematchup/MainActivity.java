@@ -33,6 +33,9 @@ public class MainActivity extends AppCompatActivity {
     private List<AuthUI.IdpConfig> providers;
     private Button signout_button;
     private Button search_button;
+    private Button viewlist_button;
+    private Button matchup_button;
+    private Button viewtowatch_button;
 
 
     /**
@@ -83,6 +86,36 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // View Favorite Movies button
+        viewlist_button = (Button) findViewById(R.id.goToViewList_button);
+        viewlist_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), FavoriteMovies.class);
+                startActivity(intent);
+            }
+        });
+
+        // Movie Matchup button
+        matchup_button = (Button) findViewById(R.id.goToMatchup_button);
+        matchup_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), Matchup.class);
+                startActivity(intent);
+            }
+        });
+
+        // To Watch / Recommendation button
+        viewtowatch_button = (Button) findViewById(R.id.goToWatchList_button);
+        viewtowatch_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), Recommendations.class);
+                startActivity(intent);
+            }
+        });
+
         // Initialize sign-in options
         providers = Arrays.asList(
                 new AuthUI.IdpConfig.PhoneBuilder().build(),        // Phone Builder
@@ -125,10 +158,13 @@ public class MainActivity extends AppCompatActivity {
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 // Show email on Toast
                 Toast.makeText(this, "" + user.getEmail(), Toast.LENGTH_SHORT).show();
-                // Set Button signout
+                // Set Button visibility
                 signout_button.setEnabled(true);
-                // Set home button
                 search_button.setEnabled(true);
+                viewlist_button.setEnabled(true);
+                matchup_button.setEnabled(true);
+                viewtowatch_button.setEnabled(true);
+
             } else {
                 Toast.makeText(this, ""+response.getError().getMessage(), Toast.LENGTH_SHORT).show();
             }

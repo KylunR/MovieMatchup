@@ -29,3 +29,13 @@ App allows for searching of movies
 
 User Stories
 * As a user, I would like to search and add a specific movie to my ranked list.
+
+
+## Future Features
+
+### Movie Matchup 
+
+### View Your Favorite Movies
+
+### Share Your Favorite Movies on Social Media
+
