@@ -23,7 +23,10 @@ public class User {
     private FavoriteList favoriteList;
     private WatchList watchList;
 
-    public User() {}
+    public User() {
+        this.favoriteList = new FavoriteList();
+        this.watchList = new WatchList();
+    }
 
     public User(String email, FavoriteList favoriteList, WatchList watchList) {
         this.email = email;
@@ -86,5 +89,17 @@ public class User {
 
     public WatchList getWatchList() {
         return this.watchList;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setFavoriteList(FavoriteList favoriteList) {
+        this.favoriteList = favoriteList;
+    }
+
+    public void setWatchList(WatchList watchList) {
+        this.watchList = watchList;
     }
 }
