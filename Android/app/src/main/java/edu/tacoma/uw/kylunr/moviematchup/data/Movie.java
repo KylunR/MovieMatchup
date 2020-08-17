@@ -6,6 +6,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  *  Movie class represents a Movie that holds
@@ -42,6 +43,14 @@ public class Movie {
         return this.title + "," + this.posterURL + "," + this.id + "," + this.getVoteCount();
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Movie movie = (Movie) o;
+        return id == movie.id;
+    }
+
     /**
      * Takes in a JSON string from a GET request
      * Parses the JSON and creates movie objects
@@ -67,7 +76,7 @@ public class Movie {
                 JSONObject obj = arr.getJSONObject(i);
 
                 Movie movie = new Movie(obj.getString(TITLE),
-                        "http://image.tmdb.org/t/p/w154" + obj.getString(POSTER),
+                        "https://image.tmdb.org/t/p/w185" + obj.getString(POSTER),
                         obj.getInt(ID), obj.getInt(VOTE_COUNT));
 
                 movieList.add(movie);

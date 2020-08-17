@@ -112,5 +112,4 @@ public class FavoriteList {
     public List<Movie> getList() {
         return this.list;
     }
-
 }

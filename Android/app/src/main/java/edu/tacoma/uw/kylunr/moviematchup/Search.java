@@ -170,7 +170,7 @@ public class Search extends AppCompatActivity {
 
                         for (Movie movie: searchList) {
                             // Add data to text view
-                            results += movie.toString() + "\n";
+                            results += movie.getTitle() + "\n";
                         }
 
                         textView.setText(results);
