@@ -36,7 +36,6 @@ import edu.tacoma.uw.kylunr.moviematchup.data.Movie;
 import edu.tacoma.uw.kylunr.moviematchup.data.User;
 import edu.tacoma.uw.kylunr.moviematchup.data.WatchList;
 
-
 /**
  * This class represents the Matchup Activity.
  * This activity presents the viewer with the choice
@@ -56,18 +55,18 @@ public class Matchup extends AppCompatActivity {
         setContentView(R.layout.activity_matchup);
         getPoplarMovies();
 
-        User user = new User();
+        final User user = new User();
         // Get email
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         String email = firebaseUser.getEmail();
         // Set email
         user.setEmail(email);
         // Update Data for user
-        // user.getData();
+        user.getData();
         // Get current favorite list
-        final FavoriteList favoriteList = user.getFavoriteList();
+        final FavoriteList favoriteList = new FavoriteList(user.getFavoriteList());
         // Get current watch list
-        final WatchList watchList = user.getWatchList();
+        final WatchList watchList = new WatchList(user.getWatchList());
 
 
         // Button for movie choice A
@@ -88,6 +87,12 @@ public class Matchup extends AppCompatActivity {
             public void onClick(View v) {
                 Log.e("Test", "Choice B");
                 favoriteList.matchupResult(choiceB, choiceA);
+                // Set user's favorite list
+                user.setFavoriteList(favoriteList);
+                // Set user's watch list
+                user.setWatchList(watchList);
+                // Update user data
+                user.pushData();
                 getPoplarMovies();
             }
         });
@@ -99,6 +104,12 @@ public class Matchup extends AppCompatActivity {
             public void onClick(View v) {
                 Log.e("Test", "Have not seen Choice A");
                 watchList.addMovie(choiceA);
+                // Set user's favorite list
+                user.setFavoriteList(favoriteList);
+                // Set user's watch list
+                user.setWatchList(watchList);
+                // Update user data
+                user.pushData();
                 getPoplarMovies();
             }
         });
@@ -109,7 +120,13 @@ public class Matchup extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.e("Test", "Have not seen Choice B");
-                watchList.addMovie(choiceA);
+                watchList.addMovie(choiceB);
+                // Set user's favorite list
+                user.setFavoriteList(favoriteList);
+                // Set user's watch list
+                user.setWatchList(watchList);
+                // Update user data
+                user.pushData();
                 getPoplarMovies();
             }
         });
@@ -122,16 +139,15 @@ public class Matchup extends AppCompatActivity {
                 Log.e("Test", "Have not seen either");
                 watchList.addMovie(choiceA);
                 watchList.addMovie(choiceB);
+                // Set user's favorite list
+                user.setFavoriteList(favoriteList);
+                // Set user's watch list
+                user.setWatchList(watchList);
+                // Update user data
+                user.pushData();
                 getPoplarMovies();
             }
         });
-
-        // Set user's favorite list
-        user.setFavoriteList(favoriteList);
-        // Set user's watch list
-        user.setWatchList(watchList);
-        // Update user data
-        // user.pushData();
     }
 
     /**

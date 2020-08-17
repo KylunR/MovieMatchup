@@ -47,13 +47,13 @@ public class User {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Log.d(TAG, "DocumentSnapshot successfully written");
+                        Log.e(TAG, "DocumentSnapshot successfully written");
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error writing document", e);
+                        Log.e(TAG, "Error writing document", e);
                     }
                 });
     }
@@ -62,13 +62,22 @@ public class User {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         DocumentReference docRef = db.collection("users").document(this.email);
+
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
-                        Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                        Log.e(TAG, "DocumentSnapshot data: " + document.getData());
+
+                        String favoriteListString = document.getString("Favorite List");
+                        favoriteList.parseString(favoriteListString);
+
+                        String watchListString = document.getString("Watch List");
+                        watchList.parseString(watchListString);
+
                     } else {
                         Log.d(TAG, "No such document");
                     }
@@ -77,6 +86,8 @@ public class User {
                 }
             }
         });
+
+
     }
 
     public String getEmail() {

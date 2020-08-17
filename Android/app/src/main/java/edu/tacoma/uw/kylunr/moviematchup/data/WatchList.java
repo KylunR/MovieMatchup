@@ -2,6 +2,7 @@ package edu.tacoma.uw.kylunr.moviematchup.data;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class WatchList {
 
@@ -9,6 +10,10 @@ public class WatchList {
 
     public WatchList() {
         watchList = new ArrayList<Movie>();
+    }
+
+    public WatchList(WatchList watchList) {
+        this.watchList = watchList.getWatchList();
     }
 
     /**
@@ -51,6 +56,25 @@ public class WatchList {
     }
 
     /**
+     * Parses a string representation of a watch list
+     * that is returned from Google's Firestore
+     *
+     * @param data
+     */
+    public void parseString(String data) {
+        Scanner scanner = new Scanner(data);
+
+        while (scanner.hasNextLine()) {
+            String line = scanner.nextLine();
+
+            String[] values = line.split(",");
+
+            watchList.add(new Movie(values[0], values[1],
+                    Integer.parseInt(values[2]), Integer.parseInt(values[3])));
+        }
+    }
+
+    /**
      * Overrides the toString method to
      * return a string containing the
      * titles of all the movies on the list
@@ -63,10 +87,8 @@ public class WatchList {
         String retVal = "";
 
         for (Movie movie : watchList) {
-            retVal += movie.toString() + ". ";
+            retVal += movie.toString() + "\n";
         }
-
-        retVal = retVal.substring(0, retVal.length() - 1);
 
         return retVal;
     }
