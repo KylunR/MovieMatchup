@@ -301,13 +301,25 @@ public class Matchup extends AppCompatActivity {
         }
     }
 
+    /**
+     * This class represents an AsyncTask to download an movie poster
+     * from an external API
+     */
     private static class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-        ImageView image;
 
         public DownloadImageTask(ImageView bmImage) {
             this.image = bmImage;
         }
 
+        ImageView image;
+
+        /**
+         * Connects to the API's URL and begins decoding the
+         * image into a bitmap
+         *
+         * @param urls  - url of movie poster
+         * @return  bitmap representation of the poster
+         */
         protected Bitmap doInBackground(String... urls) {
 
             String urldisplay = urls[0];
@@ -324,6 +336,12 @@ public class Matchup extends AppCompatActivity {
             return bitmap;
         }
 
+        /**
+         * Sets the result from doInBackground as the image
+         * source (bitmap)
+         *
+         * @param result
+         */
         protected void onPostExecute(Bitmap result) {
             image.setImageBitmap(result);
         }
