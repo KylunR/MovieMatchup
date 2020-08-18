@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private Button viewlist_button;
     private Button matchup_button;
     private Button viewtowatch_button;
+    private ImageView app_logo;
 
 
     /**
@@ -51,6 +53,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Get app logo
+        app_logo = (ImageView) findViewById(R.id.logo);
 
         // Sign-out button and behavior
         signout_button = (Button) findViewById(R.id.signout_button);
@@ -81,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
         search_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), Search.class);
+                Intent intent = new Intent(v.getContext(), SearchActivity.class);
                 startActivity(intent);
             }
         });
@@ -91,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
         viewlist_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), FavoriteMovies.class);
+                Intent intent = new Intent(v.getContext(), ViewFavoriteMoviesActivity.class);
                 startActivity(intent);
             }
         });
@@ -101,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
         matchup_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), Matchup.class);
+                Intent intent = new Intent(v.getContext(), MatchupActivity.class);
                 startActivity(intent);
             }
         });
@@ -111,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
         viewtowatch_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), Recommendations.class);
+                Intent intent = new Intent(v.getContext(), RecommendationsActivity.class);
                 startActivity(intent);
             }
         });
@@ -134,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(
                 AuthUI.getInstance().createSignInIntentBuilder()
                 .setAvailableProviders(providers)
-                .setTheme(R.style.MyTheme)
+                .setTheme(R.style.AppTheme)
                 .build(), MY_REQUEST_CODE
         );
     }
@@ -164,6 +169,7 @@ public class MainActivity extends AppCompatActivity {
                 viewlist_button.setEnabled(true);
                 matchup_button.setEnabled(true);
                 viewtowatch_button.setEnabled(true);
+                app_logo.setEnabled(true);
 
             } else {
                 Toast.makeText(this, ""+response.getError().getMessage(), Toast.LENGTH_SHORT).show();

@@ -11,7 +11,7 @@ import android.widget.ImageView;
 
 import java.io.InputStream;
 
-public class FavoriteMovies extends AppCompatActivity {
+public class ViewFavoriteMoviesActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

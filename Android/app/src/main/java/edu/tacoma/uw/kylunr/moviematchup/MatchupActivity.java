@@ -43,7 +43,7 @@ import edu.tacoma.uw.kylunr.moviematchup.data.WatchList;
  * movie or select that they have not seen either movie.
  *
  */
-public class Matchup extends AppCompatActivity {
+public class MatchupActivity extends AppCompatActivity {
 
     private List<Movie> moviePool;
     protected Movie choiceA;
@@ -158,9 +158,9 @@ public class Matchup extends AppCompatActivity {
 
         // If B is already set and A is equal to B
         // Get a new movie for B
-        while (choiceB != null && choiceA.equals(choiceB)) {
-            choiceB = getRandomMovie();
-        }
+        //while (choiceB != null && choiceA.equals(choiceB)) {
+        //    choiceB = getRandomMovie();
+        //}
 
         Button aButton = (Button) findViewById(R.id.choicea_button);
         aButton.setText(choiceA.getTitle());

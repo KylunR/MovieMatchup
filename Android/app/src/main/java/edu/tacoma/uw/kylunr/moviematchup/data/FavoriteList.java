@@ -102,10 +102,12 @@ public class FavoriteList {
     public void parseString(String data) {
         Scanner scanner = new Scanner(data);
 
+        String[] values;
+
         while (scanner.hasNextLine()) {
             String line = scanner.nextLine();
 
-            String[] values = line.split(",");
+            values = line.split("\\$");
 
             list.add(new Movie(values[0], values[1],
                     Integer.parseInt(values[2]), Integer.parseInt(values[3])));

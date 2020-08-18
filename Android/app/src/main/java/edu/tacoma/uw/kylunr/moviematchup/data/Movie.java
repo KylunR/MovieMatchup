@@ -40,7 +40,7 @@ public class Movie {
      */
     @Override
     public String toString() {
-        return this.title + "," + this.posterURL + "," + this.id + "," + this.getVoteCount();
+        return this.title + "$" + this.posterURL + "$" + this.id + "$" + this.getVoteCount();
     }
 
     @Override

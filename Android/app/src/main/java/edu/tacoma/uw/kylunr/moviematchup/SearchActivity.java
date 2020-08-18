@@ -39,7 +39,7 @@ import edu.tacoma.uw.kylunr.moviematchup.data.Movie;
  * Search represents an activity to search for a
  * specific movie
  */
-public class Search extends AppCompatActivity {
+public class SearchActivity extends AppCompatActivity {
 
     // List of results from search
     private List<Movie> searchList;
