@@ -27,23 +27,37 @@ import java.util.List;
 
 import edu.tacoma.uw.kylunr.moviematchup.data.FavoriteList;
 import edu.tacoma.uw.kylunr.moviematchup.data.Movie;
+import edu.tacoma.uw.kylunr.moviematchup.data.RecommendationItem;
+import edu.tacoma.uw.kylunr.moviematchup.data.RecyclerViewAdapter;
 import edu.tacoma.uw.kylunr.moviematchup.data.User;
 import edu.tacoma.uw.kylunr.moviematchup.data.WatchList;
+
+import static android.content.ContentValues.TAG;
 
 public class RecommendationsActivity extends AppCompatActivity {
 
     private User user;
     private ArrayList<String> titleList = new ArrayList<>();
     private ArrayList<String> posterList = new ArrayList<>();
+    private List<RecommendationItem> recommendationItemList;
+    private WatchList watchList;
+
     private RecyclerView recyclerView;
+    private RecyclerView.Adapter adapter;
+    private RecyclerView.LayoutManager layoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recommendations);
 
-        user = new User();
+        getUserData();
+        setUserData();
+        setUpRecyclerView();
+    }
 
+    private void getUserData() {
+        user = new User();
         // Get email
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         String email = firebaseUser.getEmail();
@@ -51,126 +65,29 @@ public class RecommendationsActivity extends AppCompatActivity {
         user.setEmail(email);
         // Update Data for user
         user.getData();
+    }
+
+    private void setUserData() {
         // Get current watch list
-        WatchList watchList = new WatchList(user.getWatchList());
+        watchList = new WatchList(user.getWatchList());
         List<Movie> movieList = watchList.getWatchList();
+        Log.e("TEST", "" + movieList.toString());
+        recommendationItemList = new ArrayList<>();
+        int i = 1;
 
         for (Movie movie : movieList) {
-            titleList.add(movie.getTitle());
-            posterList.add(movie.getPosterURL());
+            recommendationItemList.add(new RecommendationItem(i + ".", movie.getTitle(), movie.getPosterURL()));
+            i++;
         }
+    }
 
+    private void setUpRecyclerView() {
         recyclerView = findViewById(R.id.recycler_view);
-        assert recyclerView != null;
-        startRecyclerView(recyclerView);
-    }
-
-    private void startRecyclerView(@NonNull RecyclerView recyclerView) {
-        if(titleList != null) {
-            recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(this, titleList, posterList));
-        }
-    }
-
-    public static class SimpleItemRecyclerViewAdapter
-            extends RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder> {
-
-        private RecommendationsActivity parentActivity;
-        private ArrayList<String> titleList = new ArrayList<>();
-        private ArrayList<String> posterList = new ArrayList<>();
-        private Context context;
-
-        public SimpleItemRecyclerViewAdapter(RecommendationsActivity parent, ArrayList<String> titleList,
-                                             ArrayList<String> posterList) {
-            this.parentActivity = parent;
-            this.titleList = titleList;
-            this.posterList = posterList;
-        }
-
-        @Override
-        public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.layout_listitem, parent, false);
-            return new ViewHolder(view);
-        }
-
-        @Override
-        public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
-            // new DownloadImageTask((ImageView) holder.poster)
-            //        .execute(posterList.get(position));
-
-            holder.title.setText(titleList.get(position));
-
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                }
-            });
-        }
-
-        @Override
-        public int getItemCount() {
-            return titleList.size();
-        }
-
-
-        public class ViewHolder extends RecyclerView.ViewHolder {
-
-            ImageView poster;
-            TextView title;
-
-            public ViewHolder(@NonNull View itemView) {
-                super(itemView);
-                poster = itemView.findViewById(R.id.poster);
-                title = itemView.findViewById(R.id.title_view);
-            }
-        }
-    }
-
-    /**
-     * This class represents an AsyncTask to download an movie poster
-     * from an external API
-     */
-    private static class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-
-        public DownloadImageTask(ImageView bmImage) {
-            this.image = bmImage;
-        }
-
-        ImageView image;
-
-        /**
-         * Connects to the API's URL and begins decoding the
-         * image into a bitmap
-         *
-         * @param urls  - url of movie poster
-         * @return  bitmap representation of the poster
-         */
-        protected Bitmap doInBackground(String... urls) {
-
-            String urldisplay = urls[0];
-            Bitmap bitmap = null;
-
-            try {
-                InputStream in = new java.net.URL(urldisplay).openStream();
-                bitmap = BitmapFactory.decodeStream(in);
-
-            } catch (Exception e) {
-                Log.e("Error", e.getMessage());
-                e.printStackTrace();
-            }
-            return bitmap;
-        }
-
-        /**
-         * Sets the result from doInBackground as the image
-         * source (bitmap)
-         *
-         * @param result
-         */
-        protected void onPostExecute(Bitmap result) {
-            image.setImageBitmap(result);
-        }
+        recyclerView.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(this);
+        adapter = new RecyclerViewAdapter(recommendationItemList, RecommendationsActivity.this);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
+        Log.e("TEST", "" + recommendationItemList.toString());
     }
 }

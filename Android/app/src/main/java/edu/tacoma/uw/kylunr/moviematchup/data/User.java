@@ -27,6 +27,7 @@ public class User {
     private String email;
     private FavoriteList favoriteList;
     private WatchList watchList;
+    private boolean hasUpdatedData = false;
 
     public User() {
         this.favoriteList = new FavoriteList();
@@ -98,6 +99,8 @@ public class User {
                         String watchListString = document.getString("Watch List");
                         watchList.parseString(watchListString);
 
+                        hasUpdatedData = true;
+
                     } else {
                         Log.d(TAG, "No such document");
                     }
@@ -106,8 +109,6 @@ public class User {
                 }
             }
         });
-
-
     }
 
     public String getEmail() {
@@ -120,6 +121,10 @@ public class User {
 
     public WatchList getWatchList() {
         return this.watchList;
+    }
+
+    public boolean getHasUpdatedData() {
+        return this.hasUpdatedData;
     }
 
     public void setEmail(String email) {

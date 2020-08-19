@@ -22,6 +22,8 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.Arrays;
 import java.util.List;
 
+import edu.tacoma.uw.kylunr.moviematchup.data.User;
+
 
 /**
  * This class represents the launcher activity in which the user
