@@ -49,7 +49,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         holder.number.setText(currentItem.getNumber());
         holder.title.setText(currentItem.getTitle());
-        Log.e("E", "Setting Image");
         PosterDownloader posterDownloader = new PosterDownloader(holder.poster, context);
         posterDownloader.execute(currentItem.getPoster());
     }

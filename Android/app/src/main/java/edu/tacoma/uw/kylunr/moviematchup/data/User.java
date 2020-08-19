@@ -14,6 +14,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.CountDownLatch;
 
 import static android.content.ContentValues.TAG;
 
@@ -77,6 +78,7 @@ public class User {
      * data retrieved into the user's member variables
      */
     public void getData() {
+
         // Get database instance
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         // Get user instance
