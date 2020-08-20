@@ -72,10 +72,10 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 // Update shared preferences
-                                mSharedPreferences
-                                        .edit()
-                                        .putBoolean(getString(R.string.LOGGEDIN), false)
-                                        .commit();
+                                // mSharedPreferences
+                                //        .edit()
+                                //        .putBoolean(getString(R.string.LOGGEDIN), false)
+                                //        .commit();
 
                                 // Once signed-out hide button
                                 signout_button.setEnabled(false);
@@ -181,10 +181,10 @@ public class MainActivity extends AppCompatActivity {
                 app_logo.setEnabled(true);
 
                 // Update shared preferences
-                mSharedPreferences
-                        .edit()
-                        .putBoolean(getString(R.string.LOGGEDIN), true)
-                        .commit();
+                //mSharedPreferences
+                //        .edit()
+                //        .putBoolean(getString(R.string.LOGGEDIN), true)
+                //        .commit();
 
             } else {
                 Toast.makeText(this, ""+response.getError().getMessage(), Toast.LENGTH_SHORT).show();
