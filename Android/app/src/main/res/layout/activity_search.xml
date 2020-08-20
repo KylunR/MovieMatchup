@@ -1,39 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SearchActivity"
-    android:background="@android:color/white">
+    android:orientation="vertical"
+    tools:context=".SearchActivity">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="75dp" >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@android:color/black"
-            android:textSize="50dp"
-            android:textStyle="bold"
-            android:text="Search"
-            android:layout_gravity="center_horizontal"/>
+        android:orientation="vertical"
+        android:layout_marginTop="25dp" >
 
         <EditText
             android:id="@+id/search_bar"
-            android:layout_marginTop="15dp"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Enter movie title..."
             android:layout_gravity="center_horizontal"
             android:textColor="@android:color/black"
             android:textAlignment="center"
             android:textColorHint="@android:color/black"
-            android:backgroundTint="@android:color/darker_gray"
+            android:background="@android:color/white"
             android:width="250dp"
             android:textStyle="bold" />
 
@@ -48,19 +38,15 @@
             android:textStyle="bold"
             android:textColor="@android:color/black"
             android:layout_marginTop="10dp" />
-
-        <TextView
-            android:id="@+id/textview"
-            android:layout_marginTop="25dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:scrollbars="vertical"
-            android:textStyle="bold"
-            android:textSize="15dp"
-            />
-
-
-
     </LinearLayout>
 
-</FrameLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="4dp"
+        android:scrollbars="vertical"
+        android:focusable="true"
+        android:focusableInTouchMode="true"/>
+
+</LinearLayout>

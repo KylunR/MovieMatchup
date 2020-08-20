@@ -78,7 +78,11 @@ public class FavoriteList {
      * @param movie - movie to add
      */
     public void addMovie(Movie movie) {
-        list.add(movie);
+        if(list.contains(movie)) {
+            return;
+        } else {
+            list.add(movie);
+        }
     }
 
     /**

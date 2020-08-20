@@ -1,6 +1,9 @@
 package edu.tacoma.uw.kylunr.moviematchup;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -13,12 +16,21 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,9 +42,18 @@ import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
+import edu.tacoma.uw.kylunr.moviematchup.data.FavoriteList;
 import edu.tacoma.uw.kylunr.moviematchup.data.Movie;
+import edu.tacoma.uw.kylunr.moviematchup.data.RecommendationItem;
+import edu.tacoma.uw.kylunr.moviematchup.data.RecyclerTouchListener;
+import edu.tacoma.uw.kylunr.moviematchup.data.RecyclerViewAdapter;
+import edu.tacoma.uw.kylunr.moviematchup.data.User;
+import edu.tacoma.uw.kylunr.moviematchup.data.WatchList;
+
+import static android.content.ContentValues.TAG;
 
 
 /**
@@ -43,6 +64,12 @@ public class SearchActivity extends AppCompatActivity {
 
     // List of results from search
     private List<Movie> searchList;
+    private User user;
+    private List<RecommendationItem> recommendationItemList;
+
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter adapter;
+    private RecyclerView.LayoutManager layoutManager;
 
     /**
      * Displays the search bar and button to the viewer.
@@ -54,6 +81,7 @@ public class SearchActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+        setTitle("Search");
 
         Button button = (Button) findViewById(R.id.search_button);
         final EditText query = (EditText) findViewById(R.id.search_bar);
@@ -79,6 +107,11 @@ public class SearchActivity extends AppCompatActivity {
         if (searchList != null ) {
             searchList.clear();
         }
+    }
+
+    private void addedMovie() {
+        searchList.clear();
+        Toast.makeText(this, "Added movie to list", Toast.LENGTH_SHORT).show();
     }
 
     /**
@@ -161,22 +194,82 @@ public class SearchActivity extends AppCompatActivity {
                     // Parse JSON
                     searchList = Movie.parseMovieJson(jsonObject.getString("data"));
 
-                    // Add search results to screen
-                    TextView textView = (TextView) findViewById(R.id.textview);
-                    textView.setMovementMethod(new ScrollingMovementMethod());
-
                     if (searchList != null) {
-                        String results = "";
+
+                        recommendationItemList = new ArrayList<>();
 
                         for (Movie movie: searchList) {
-                            // Add data to text view
-                            results += movie.getTitle() + "\n";
+                            recommendationItemList.add(new RecommendationItem("", movie.getTitle(), movie.getPosterURL()));
                         }
 
-                        textView.setText(results);
+                        recyclerView = findViewById(R.id.recycler_view);
+                        recyclerView.setHasFixedSize(true);
+                        layoutManager = new LinearLayoutManager(SearchActivity.this);
+                        adapter = new RecyclerViewAdapter(recommendationItemList, SearchActivity.this);
+                        recyclerView.setLayoutManager(layoutManager);
+                        recyclerView.setAdapter(adapter);
+
+                        recyclerView.addOnItemTouchListener(
+                                new RecyclerTouchListener(getApplicationContext(),
+                                        recyclerView, new RecyclerTouchListener.ClickListener() {
+                                    @Override
+                                    public void onClick(View view, int position) {
+                                        final Movie movieToAdd = searchList.get(position);
+                                        user = new User();
+                                        // Get email
+                                        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                                        String email = firebaseUser.getEmail();
+                                        // Set email
+                                        user.setEmail(email);
+
+                                        final FavoriteList favoriteList = new FavoriteList();
+                                        final WatchList watchList = new WatchList();
+
+                                        // Get database instance
+                                        FirebaseFirestore db = FirebaseFirestore.getInstance();
+                                        // Get user instance
+                                        DocumentReference docRef = db.collection("users").document(user.getEmail());
+
+                                        // Retrieve data
+                                        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                if (task.isSuccessful()) {
+                                                    DocumentSnapshot document = task.getResult();
+                                                    // If user exists
+                                                    if (document.exists()) {
+                                                        Log.e(TAG, "DocumentSnapshot data: " + document.getData());
+
+                                                        String favoriteListString = document.getString("Favorite List");
+                                                        String watchListString = document.getString("Watch List");
+                                                        favoriteList.parseString(favoriteListString);
+                                                        watchList.parseString(watchListString);
+
+                                                        favoriteList.addMovie(movieToAdd);
+
+                                                        user.setFavoriteList(favoriteList);
+                                                        user.setWatchList(watchList);
+                                                        user.pushData();
+
+                                                        addedMovie();
+                                                    } else {
+                                                        Log.d(TAG, "No such document");
+                                                    }
+                                                } else {
+                                                    Log.d(TAG, "get failed with ", task.getException());
+                                                }
+                                            }
+                                        });
+
+                                    }
+
+                                    @Override
+                                    public void onLongClick(View view, int position) {
+
+                                    }
+                                }));
                     } else {
-                        textView.setText("");
-                        textView.append("No results");
+
                     }
 
             } catch (JSONException e) {

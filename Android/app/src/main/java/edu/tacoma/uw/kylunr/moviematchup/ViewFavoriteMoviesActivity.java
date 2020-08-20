@@ -47,6 +47,7 @@ public class ViewFavoriteMoviesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorite_movies);
+        setTitle("Your Ranked Movie List");
 
         getUserData();
     }
