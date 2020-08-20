@@ -5,11 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -86,12 +89,35 @@ public class ViewFavoriteMoviesActivity extends AppCompatActivity {
                         recommendationItemList = new ArrayList<>();
                         int i = 1;
 
+                        String shareString = "My Favorites Movies: \n";
+
                         for (Movie movie : movieList) {
                             recommendationItemList.add(new RecommendationItem(i + ".", movie.getTitle(), movie.getPosterURL()));
+
+                            if (i < 11) {
+                                shareString += i + ". " + movie.getTitle() + "\n";
+                            }
+
                             i++;
                         }
 
                         setUpRecyclerView();
+
+                        Button button = (Button) findViewById(R.id.share_button);
+                        final String finalShareString = shareString;
+                        button.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent sendIntent = new Intent();
+                                sendIntent.setAction(Intent.ACTION_SEND);
+                                sendIntent.putExtra(Intent.EXTRA_TEXT, finalShareString);
+                                sendIntent.setType("text/plain");
+
+                                Intent shareIntent = Intent.createChooser(sendIntent, null);
+                                startActivity(shareIntent);
+                            }
+                        });
+
 
                     } else {
                         Log.d(TAG, "No such document");
