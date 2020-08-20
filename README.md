@@ -58,6 +58,9 @@ User Stories
 
 ## Project Requirments
 
+### APK File
+APK file is included and is titled: "MovieMatchup.apk"
+
 ### Bugs from Sprint I
 There were no bugs in the code of my Sprint I submission.
 
@@ -79,3 +82,6 @@ The user is able to share their top 10 favorite movies in the "Favorite List" se
 
 ### Graphics
 The application shows many movie posters in multiple activites.  Posters are present in "Matchup", "Favorite List", "Search", and "Recommendations".
+
+### Difficulties
+I had difficulties creating in-depth tests for my activites.  It was difficult to test the elements on screen it was difficult because out of my activies, three use RecyclerViews in which I could not figure out how to click a specific element on the recyclerview because they do not have individual IDs.  In addition, my authentication process is through Google Firestore so the buttons and EditText fields are not present in my code and unaccessible to test. 
