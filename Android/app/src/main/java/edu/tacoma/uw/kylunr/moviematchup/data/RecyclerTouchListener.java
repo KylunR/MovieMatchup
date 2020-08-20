@@ -7,6 +7,11 @@ import android.view.View;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+
+/**
+ * This class is used to apply an onClickListener to the entire
+ * RecycleViewer
+ */
 public class RecyclerTouchListener implements RecyclerView.OnItemTouchListener {
 
     private GestureDetector gestureDetector;
@@ -30,6 +35,14 @@ public class RecyclerTouchListener implements RecyclerView.OnItemTouchListener {
         });
     }
 
+    /**
+     * Overrides required method for OnItemTouchListener.
+     * Finds the element that was touched and calls the onClick method
+     *
+     * @param rv
+     * @param e
+     * @return
+     */
     @Override
     public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
 
@@ -40,18 +53,32 @@ public class RecyclerTouchListener implements RecyclerView.OnItemTouchListener {
         return false;
     }
 
+    /**
+     * Required overriden method for OnItemTouchListener.
+     * Nothing is changed.
+     * @param rv
+     * @param e
+     */
     @Override
     public void onTouchEvent(RecyclerView rv, MotionEvent e) {
     }
 
+    /**
+     * Required overriden method for OnItemTouchListener.
+     * Nothing is changed.
+     * @param disallowIntercept
+     */
     @Override
     public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
 
     }
 
+    /**
+     * Interface to allow calling class to override
+     * what happens when item is clicked
+     */
     public interface ClickListener {
         void onClick(View view, int position);
-
         void onLongClick(View view, int position);
     }
 }

@@ -27,7 +27,11 @@ public class Movie {
 
     public Movie(String title, String posterURL, int id, int voteCount) {
         this.title = title;
-        this.posterURL = posterURL;
+        if (isValidPosterURL(posterURL)) {
+            this.posterURL = posterURL;
+        } else {
+            throw new IllegalArgumentException("Invalid poster URL");
+        }
         this.id = id;
         this.voteCount = voteCount;
     }
@@ -91,6 +95,19 @@ public class Movie {
         }
 
         return movieList;
+    }
+
+    /**
+     * Checks to ensure the requested poster url is accurate
+     * @param posterURL
+     * @return
+     */
+    public boolean isValidPosterURL(String posterURL) {
+        if (!posterURL.contains("https://image.tmdb.org/t/p/w185")) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     public String getTitle() {

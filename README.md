@@ -65,7 +65,12 @@ There were no bugs in the code of my Sprint I submission.
 ### User Stories
 I was able to implement almost all user stories (high, medium, and low).  The only user story that is not implemented was a low priority story that involved viewing other user's ranked lists.
 
+
 ### Shared Preferences
+Shared preferences in this application stores if the user is currently logged in or not.  This is updated in the Main Activity.  After a user succesfully logs in, the preferences are updated; and when the user logs out, the preferences are also updated.
+
+### Testing
+I completed two tests.  One tested the Movie object and ensured the Movie object was checking for valid input in the poster url field.  The poster url should be a website leading to "The Movie Database" or tmdb to get a poster.  The other tested the search activity.  This test ensured that an user was able to type in a search query, activate the search with the button, and view the queries' results.  This test also tested the accuracy of the search engine and ensured the correct movie appeared when querying for it.
 
 
 ### Content Sharing

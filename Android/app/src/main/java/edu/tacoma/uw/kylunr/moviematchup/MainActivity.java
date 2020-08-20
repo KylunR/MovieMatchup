@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private Button matchup_button;
     private Button viewtowatch_button;
     private ImageView app_logo;
+    private SharedPreferences mSharedPreferences;
 
     /**
      * Creates buttons for other features (search, signout)
@@ -69,6 +71,12 @@ public class MainActivity extends AppCompatActivity {
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
+                                // Update shared preferences
+                                mSharedPreferences
+                                        .edit()
+                                        .putBoolean(getString(R.string.LOGGEDIN), false)
+                                        .commit();
+
                                 // Once signed-out hide button
                                 signout_button.setEnabled(false);
                                 showSignInOptions();
@@ -171,6 +179,12 @@ public class MainActivity extends AppCompatActivity {
                 matchup_button.setEnabled(true);
                 viewtowatch_button.setEnabled(true);
                 app_logo.setEnabled(true);
+
+                // Update shared preferences
+                mSharedPreferences
+                        .edit()
+                        .putBoolean(getString(R.string.LOGGEDIN), true)
+                        .commit();
 
             } else {
                 Toast.makeText(this, ""+response.getError().getMessage(), Toast.LENGTH_SHORT).show();

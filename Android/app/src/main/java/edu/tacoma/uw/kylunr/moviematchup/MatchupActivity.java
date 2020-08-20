@@ -41,7 +41,6 @@ import edu.tacoma.uw.kylunr.moviematchup.data.WatchList;
  * This activity presents the viewer with the choice
  * of two movies.  The user is able to choose either
  * movie or select that they have not seen either movie.
- *
  */
 public class MatchupActivity extends AppCompatActivity {
 
@@ -49,6 +48,10 @@ public class MatchupActivity extends AppCompatActivity {
     protected Movie choiceA;
     protected Movie choiceB;
 
+    /**
+     * Gets user data and sets up buttons with listeners
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -290,6 +293,7 @@ public class MatchupActivity extends AppCompatActivity {
                 // Parse JSON
                 moviePool = Movie.parseMovieJson(jsonObject.getString("data"));
 
+                // Set movie values
                 setValueA();
                 setValueB();
                 setPosterA();

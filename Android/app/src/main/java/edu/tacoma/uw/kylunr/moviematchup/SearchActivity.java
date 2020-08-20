@@ -6,22 +6,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -39,15 +31,13 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 import edu.tacoma.uw.kylunr.moviematchup.data.FavoriteList;
 import edu.tacoma.uw.kylunr.moviematchup.data.Movie;
-import edu.tacoma.uw.kylunr.moviematchup.data.RecommendationItem;
+import edu.tacoma.uw.kylunr.moviematchup.data.RecyclerViewItem;
 import edu.tacoma.uw.kylunr.moviematchup.data.RecyclerTouchListener;
 import edu.tacoma.uw.kylunr.moviematchup.data.RecyclerViewAdapter;
 import edu.tacoma.uw.kylunr.moviematchup.data.User;
@@ -197,19 +187,19 @@ public class SearchActivity extends AppCompatActivity {
                     if (searchList != null) {
 
                         // Create a new list for the recycler view
-                        List<RecommendationItem> recommendationItemList = new ArrayList<>();
+                        List<RecyclerViewItem> recyclerViewItemList = new ArrayList<>();
 
                         // For every movie in the search query
                         // Add it to the recylcer view list
                         for (Movie movie: searchList) {
-                            recommendationItemList.add(new RecommendationItem("", movie.getTitle(), movie.getPosterURL()));
+                            recyclerViewItemList.add(new RecyclerViewItem("", movie.getTitle(), movie.getPosterURL()));
                         }
 
                         // Set up recycler view
                         RecyclerView recyclerView = findViewById(R.id.recycler_view);
                         recyclerView.setHasFixedSize(true);
                         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(SearchActivity.this);
-                        RecyclerView.Adapter adapter = new RecyclerViewAdapter(recommendationItemList, SearchActivity.this);
+                        RecyclerView.Adapter adapter = new RecyclerViewAdapter(recyclerViewItemList, SearchActivity.this);
                         recyclerView.setLayoutManager(layoutManager);
                         recyclerView.setAdapter(adapter);
 
