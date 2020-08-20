@@ -41,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
     private Button viewtowatch_button;
     private ImageView app_logo;
 
-
     /**
      * Creates buttons for other features (search, signout)
      * and hides them from view.  Then calls showSignInOptions()

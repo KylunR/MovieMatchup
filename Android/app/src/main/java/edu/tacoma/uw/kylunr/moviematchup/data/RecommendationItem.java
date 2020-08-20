@@ -1,5 +1,9 @@
 package edu.tacoma.uw.kylunr.moviematchup.data;
 
+
+/**
+ *
+ */
 public class RecommendationItem {
     private String number;
     private String title;

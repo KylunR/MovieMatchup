@@ -5,7 +5,9 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- *
+ * This class represents a FavoriteList object.  Each
+ * user has a Favorite List object and it is used to store the
+ * list of the user's ranked movies.
  */
 public class FavoriteList {
 

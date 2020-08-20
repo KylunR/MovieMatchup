@@ -65,11 +65,6 @@ public class SearchActivity extends AppCompatActivity {
     // List of results from search
     private List<Movie> searchList;
     private User user;
-    private List<RecommendationItem> recommendationItemList;
-
-    private RecyclerView recyclerView;
-    private RecyclerView.Adapter adapter;
-    private RecyclerView.LayoutManager layoutManager;
 
     /**
      * Displays the search bar and button to the viewer.
@@ -86,6 +81,7 @@ public class SearchActivity extends AppCompatActivity {
         Button button = (Button) findViewById(R.id.search_button);
         final EditText query = (EditText) findViewById(R.id.search_bar);
 
+        // Listener for search button
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,6 +105,10 @@ public class SearchActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Notifies the user that the selected movie
+     * was added to their list
+     */
     private void addedMovie() {
         searchList.clear();
         Toast.makeText(this, "Added movie to list", Toast.LENGTH_SHORT).show();
@@ -196,30 +196,36 @@ public class SearchActivity extends AppCompatActivity {
 
                     if (searchList != null) {
 
-                        recommendationItemList = new ArrayList<>();
+                        // Create a new list for the recycler view
+                        List<RecommendationItem> recommendationItemList = new ArrayList<>();
 
+                        // For every movie in the search query
+                        // Add it to the recylcer view list
                         for (Movie movie: searchList) {
                             recommendationItemList.add(new RecommendationItem("", movie.getTitle(), movie.getPosterURL()));
                         }
 
-                        recyclerView = findViewById(R.id.recycler_view);
+                        // Set up recycler view
+                        RecyclerView recyclerView = findViewById(R.id.recycler_view);
                         recyclerView.setHasFixedSize(true);
-                        layoutManager = new LinearLayoutManager(SearchActivity.this);
-                        adapter = new RecyclerViewAdapter(recommendationItemList, SearchActivity.this);
+                        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(SearchActivity.this);
+                        RecyclerView.Adapter adapter = new RecyclerViewAdapter(recommendationItemList, SearchActivity.this);
                         recyclerView.setLayoutManager(layoutManager);
                         recyclerView.setAdapter(adapter);
 
+                        // Add listener to recycler view
                         recyclerView.addOnItemTouchListener(
                                 new RecyclerTouchListener(getApplicationContext(),
                                         recyclerView, new RecyclerTouchListener.ClickListener() {
                                     @Override
                                     public void onClick(View view, int position) {
+                                        // Get movie that was clicked
                                         final Movie movieToAdd = searchList.get(position);
+
+                                        // Update user and retrieve data from database
                                         user = new User();
-                                        // Get email
                                         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
                                         String email = firebaseUser.getEmail();
-                                        // Set email
                                         user.setEmail(email);
 
                                         final FavoriteList favoriteList = new FavoriteList();
@@ -240,17 +246,21 @@ public class SearchActivity extends AppCompatActivity {
                                                     if (document.exists()) {
                                                         Log.e(TAG, "DocumentSnapshot data: " + document.getData());
 
+                                                        // Get data from database
                                                         String favoriteListString = document.getString("Favorite List");
                                                         String watchListString = document.getString("Watch List");
                                                         favoriteList.parseString(favoriteListString);
                                                         watchList.parseString(watchListString);
 
+                                                        // Add selected movie to favorite list
                                                         favoriteList.addMovie(movieToAdd);
 
+                                                        // Push data to database
                                                         user.setFavoriteList(favoriteList);
                                                         user.setWatchList(watchList);
                                                         user.pushData();
 
+                                                        // Notify user that the movie was added
                                                         addedMovie();
                                                     } else {
                                                         Log.d(TAG, "No such document");
@@ -260,18 +270,11 @@ public class SearchActivity extends AppCompatActivity {
                                                 }
                                             }
                                         });
-
                                     }
-
                                     @Override
-                                    public void onLongClick(View view, int position) {
-
-                                    }
+                                    public void onLongClick(View view, int position) { }
                                 }));
-                    } else {
-
-                    }
-
+                    } else { }
             } catch (JSONException e) {
                 Toast.makeText(getApplicationContext(), "JSON Error: " + e.getMessage(),
                         Toast.LENGTH_SHORT).show();

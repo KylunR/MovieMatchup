@@ -43,6 +43,13 @@ public class Movie {
         return this.title + "$" + this.posterURL + "$" + this.id + "$" + this.getVoteCount();
     }
 
+    /**
+     * Overrides equals to compare
+     * to movie objects
+     *
+     * @param o - object to compare
+     * @return  - if movie is equal
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
