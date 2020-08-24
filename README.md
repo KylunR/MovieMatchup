@@ -49,39 +49,7 @@ User Stories
 
 
 ### View Recommended Movies
-App allows the viewer to get recommendations for movies to watch.  The recommendation list is generated based on the movies the viewer has marked as not seen.
+App allows the viewer to get recommendations for movies to watch.  The recommendation list includes all the movies the user has marked "haven't seen", the list is then sorted based on popularity.
 
 User Stories
 * As a user, I would like to view a list of all the movies I have not seen, and get movie recommendations based on this list.
-
-
-
-## Project Requirments
-
-### APK File
-APK file is included and is titled: "MovieMatchup.apk"
-
-### Bugs from Sprint I
-There were no bugs in the code of my Sprint I submission.
-
-
-### User Stories
-I was able to implement almost all user stories (high, medium, and low).  The only user story that is not implemented was a low priority story that involved viewing other user's ranked lists.
-
-
-### Shared Preferences
-Shared preferences in this application stores if the user is currently logged in or not.  This is updated in the Main Activity.  After a user succesfully logs in, the preferences are updated; and when the user logs out, the preferences are also updated.
-
-### Testing
-I completed two tests.  One tested the Movie object and ensured the Movie object was checking for valid input in the poster url field.  The poster url should be a website leading to "The Movie Database" or tmdb to get a poster.  The other tested the search activity.  This test ensured that an user was able to type in a search query, activate the search with the button, and view the queries' results.  This test also tested the accuracy of the search engine and ensured the correct movie appeared when querying for it.
-
-
-### Content Sharing
-The user is able to share their top 10 favorite movies in the "Favorite List" section.  This allows the user to share their top ten movies over text and email.  The user can also copy their top ten movies to their clipboard for easy sharing on social medias.  
-
-
-### Graphics
-The application shows many movie posters in multiple activites.  Posters are present in "Matchup", "Favorite List", "Search", and "Recommendations".
-
-### Difficulties
-I had difficulties creating in-depth tests for my activites.  It was difficult to test the elements on screen it was difficult because out of my activies, three use RecyclerViews in which I could not figure out how to click a specific element on the recyclerview because they do not have individual IDs.  In addition, my authentication process is through Google Firestore so the buttons and EditText fields are not present in my code and unaccessible to test. 
