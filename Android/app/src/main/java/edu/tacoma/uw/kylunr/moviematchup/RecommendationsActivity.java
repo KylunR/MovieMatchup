@@ -17,6 +17,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import edu.tacoma.uw.kylunr.moviematchup.data.Movie;
@@ -87,6 +88,7 @@ public class RecommendationsActivity extends AppCompatActivity {
 
                         // Get watch list for recommendations
                         List<Movie> movieList = watchList.getWatchList();
+                        Collections.sort(movieList, Collections.reverseOrder());
                         recyclerViewItemList = new ArrayList<>();
                         int i = 1;
 

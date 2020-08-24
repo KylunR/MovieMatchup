@@ -179,6 +179,8 @@ public class MatchupActivity extends AppCompatActivity {
         // Get a new movie for A
         while (choiceA != null && choiceA.equals(choiceB)) {
             choiceA = getRandomMovie();
+            Button aButton = (Button) findViewById(R.id.choicea_button);
+            aButton.setText(choiceA.getTitle());
         }
 
         Button bButton = (Button) findViewById(R.id.choiceb_button);

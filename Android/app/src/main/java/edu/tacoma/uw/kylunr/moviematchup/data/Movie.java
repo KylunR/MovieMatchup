@@ -13,7 +13,7 @@ import java.util.Objects;
  *  values for the title of the movies and a url to retrieve the
  *  movie's poster
  */
-public class Movie {
+public class Movie implements Comparable<Movie> {
 
     private String title;
     private String posterURL;
@@ -124,5 +124,22 @@ public class Movie {
 
     public int getVoteCount() {
         return this.voteCount;
+    }
+
+    @Override
+    public int compareTo(Movie o) {
+
+        // If equal
+        if (o == this) {
+            return 0;
+        }
+        // If less than
+        else if (this.voteCount < o.getVoteCount()) {
+            return -1;
+        }
+        // If greater
+        else {
+            return 1;
+        }
     }
 }
